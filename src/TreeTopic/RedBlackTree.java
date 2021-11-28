@@ -1,4 +1,4 @@
-package myTree;
+package TreeTopic;
 
 
 public class RedBlackTree {
