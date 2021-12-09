@@ -32,7 +32,6 @@ public class RedBlackTree {
 
 	/**
 	 * 为空返回黑色，不为空返回节点的颜色
-	 * @param node
 	 * @return color of node
 	 */
 	private boolean colorOf(TNode node) {
@@ -56,9 +55,6 @@ public class RedBlackTree {
 	 *  pl   pr(x)	=>    p    rr
 	 * 		/  \ 		 / \
 	 * 	   rl  rr		pl  rl
-	 *
-	 *
-	 * @param p
 	 */
 	private void leftRotate(TNode p) {
 		//p为空
@@ -174,20 +170,19 @@ public class RedBlackTree {
 	/**
 	 * 1.p挂在黑色节点下，不需调整。
 	 * 2.左三，右三才要调整，即黑红红
-	 *
-	 * @param p
 	 */
 	private void fixAfterPut(TNode p) {
 		//新增一定是红色
 		p.color=RED;
 		//p挂在黑色节点下，不需调整
 		while(p!=root&&p!=null&&p.parent.color==RED) {
-			//左三,p的父节点是p爷节点的左孩子
+			//p的父节点是p爷节点的左孩子
 			if(parentOf(p)==leftOf(parentOf(parentOf(p)))) {
 				//叔叔节点
 				TNode uncleNode=rightOf(parentOf(parentOf(p)));
+				//叔节点为红
 				if(colorOf(uncleNode)==RED) {
-					//有叔叔节点，所以父节点和叔叔节点变黑，爷节点变红
+					//有叔叔节点为红色，所以父节点和叔叔节点变黑，爷节点变红
 					setColor(parentOf(p), BLACK);
 					setColor(uncleNode, BLACK);
 					setColor(parentOf(parentOf(p)), RED);
@@ -195,18 +190,22 @@ public class RedBlackTree {
 					p=parentOf(parentOf(p));
 
 				}
+				//叔节点为黑
 				else {
-					//如果p是父节点的右孩子，还需要先左旋一下，使p的父节点下去。
+					//如果p是父节点的右孩子，还需要先左旋一下，使p的父节点下去
+					// 局部为三角调整为直线
 					if(p==rightOf(parentOf(p))) {
 						p=parentOf(p);
 						leftRotate(p);
 					}
+					//局部为直线
 					//父节点变黑，爷节点变红，以爷节点右旋转
 					setColor(parentOf(p), BLACK);
 					setColor(parentOf(parentOf(p)), RED);
 					rightRotate(parentOf(parentOf(p)));
 				}
 			}
+
 			//右三,p的父节点是p爷节点的右孩子
 			else {
 				//叔叔节点
@@ -295,6 +294,7 @@ public class RedBlackTree {
 	private void deleteonewaytree(TNode t,TNode s){
 		//情况2：删除的节点只有一个子树
 		//删除节点，用其子节点代替它
+		//被删节点为红色 直接提上来即可
 		if(t.left == null && t.right != null){
 			s = t.right;
 		} else if (t.left != null && t.right == null){
@@ -359,6 +359,8 @@ public class RedBlackTree {
 					d = root;
 				}
 			}
+
+
 			else{
 				TNode rnode = leftOf(parentOf(d));
 				if(colorOf(rnode)==RED){

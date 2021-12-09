@@ -7,6 +7,7 @@ public class BinarySearchTree {
         if (root == null) {
             return true;
         }
+        System.out.print(" "+root.value+" ");
         if (!isBST(root.left, pre)) {
             return false;
         }
@@ -46,10 +47,11 @@ public class BinarySearchTree {
         t.addNode(n2, t.root);
         Node n3 = new Node(3);
         t.addNode(n3, t.root);
-        Node n4 = new Node(4);
+        Node n4 = new Node(6);
         t.addNode(n4, t.root);
-        Node n5 = new Node(6);
+        Node n5 = new Node(4);
         t.addNode(n5, t.root);
+        System.out.print("先序遍历");
         System.out.println(BinarySearchTree.isBST(t.root, Integer.MIN_VALUE));
     }
 }
